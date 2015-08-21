@@ -1,0 +1,80 @@
+	.file	"main.c"
+	.section	.rodata
+.LC0:
+	.string	"xen2"
+	.text
+	.globl	sum
+	.type	sum, @function
+sum:
+.LFB0:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$48, %rsp
+	movq	%fs:40, %rax
+	movq	%rax, -8(%rbp)
+	xorl	%eax, %eax
+	movq	$7234936, -32(%rbp)
+	movl	$0, -24(%rbp)
+	movq	$.LC0, -40(%rbp)
+	movq	-40(%rbp), %rax
+	movq	$-1, %rcx
+	movq	%rax, %rdx
+	movl	$0, %eax
+	movq	%rdx, %rdi
+	repnz scasb
+	movq	%rcx, %rax
+	notq	%rax
+	leaq	-1(%rax), %rdx
+	movq	-40(%rbp), %rax
+	addq	%rdx, %rax
+	movl	$1701322784, (%rax)
+	movw	$28780, 4(%rax)
+	movb	$0, 6(%rax)
+	movq	-40(%rbp), %rax
+	movq	-8(%rbp), %rsi
+	xorq	%fs:40, %rsi
+	je	.L3
+	call	__stack_chk_fail
+.L3:
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE0:
+	.size	sum, .-sum
+	.section	.rodata
+.LC1:
+	.string	"---> %s\n"
+	.text
+	.globl	main
+	.type	main, @function
+main:
+.LFB1:
+	.cfi_startproc
+	pushq	%rbp
+	.cfi_def_cfa_offset 16
+	.cfi_offset 6, -16
+	movq	%rsp, %rbp
+	.cfi_def_cfa_register 6
+	subq	$16, %rsp
+	movl	%edi, -4(%rbp)
+	movq	%rsi, -16(%rbp)
+	movl	$0, %eax
+	call	sum
+	movq	%rax, %rsi
+	movl	$.LC1, %edi
+	movl	$0, %eax
+	call	printf
+	movl	$0, %eax
+	leave
+	.cfi_def_cfa 7, 8
+	ret
+	.cfi_endproc
+.LFE1:
+	.size	main, .-main
+	.ident	"GCC: (Ubuntu 4.8.4-2ubuntu1~14.04) 4.8.4"
+	.section	.note.GNU-stack,"",@progbits
