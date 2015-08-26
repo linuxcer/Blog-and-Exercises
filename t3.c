@@ -4,11 +4,9 @@
  *  --------->    Mail: chengfeizh@gmail.com
  *  --------->    Time: 2015年08月22日 星期六 07时49分30秒
  ************************************************************************/
-
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 int main() {
     http://www.taobao.com
-    cout << "wel" <<endl;
+    printf("hello");
     return 0;
 }
