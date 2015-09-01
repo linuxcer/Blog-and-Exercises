@@ -11,7 +11,7 @@
 int main() {
     int num = 1;
     int pid;
-    if ((pid = fork()) == 0) {
+    if ((pid = vfork()) == 0) {
         printf("Child, num = %d\n", ++num);
         sleep(4);
         printf("Child Over\n");
