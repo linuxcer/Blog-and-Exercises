@@ -13,14 +13,17 @@ using namespace std;
 // return false means equal else not equal 
 struct cmp_key {
     bool operator()(const double &k1, const double &k2) const {
-        return (fabs(k1 - k2) > 1e-8);
+        return (fabs(k1 - k2) > 1e-2);
     }
 };
 
 int main() {
     map<double, int, cmp_key> Map;
-    Map[0.0000000002] = 1;
-    if (Map.find(0.0000000001) == Map.end()) {
+    Map[69] += 1;
+    map <double, int, cmp_key>::iterator it;
+    it = Map.find(69);                                                                          
+    if (it == Map.end()) { 
+    //if (Map.find(69) == Map.end()) {
         cout << "ditn't equal" << endl;
     } else {
         cout << "equal" << endl;
