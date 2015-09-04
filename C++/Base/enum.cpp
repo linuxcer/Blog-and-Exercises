@@ -14,7 +14,7 @@ int main() {
     enum GameResult omit = CANCEL;
 
     for (int count = WIN; count <= CANCEL; count++ ) {
-        result = GameResult(count);
+        result = static_cast<GameResult> (count);
         if (result == omit) {
             cout << "The game was cancelled" << endl;
         } else {
