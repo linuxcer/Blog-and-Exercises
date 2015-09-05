@@ -20,6 +20,7 @@ int main() {
     if ((pid == fork()) == 0) {
         printf("in child\n");
         execl("./pro1.out","",(char *)0);
+        printf("-------------->\n");
     } else {
         //clone(fun, (char *)stack + 8192, CLONE_VFORK, 0);
         printf("in parent\n");
