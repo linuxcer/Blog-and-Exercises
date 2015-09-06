@@ -7,6 +7,8 @@
 
 #include <iostream>
 #include <vector>
+#include <cstring>
+
 using namespace std;
 class Solution {
 public:
@@ -20,14 +22,18 @@ public:
         vector<string> str;
         int max = 0;
         int length = 0;
+        int index = 0;
         for (int i = 0; i < dictionary.size(); ++i) {
             length = dictionary[i].length();
             if (length > max) {
                 max = length;
                 str.clear();
+                index = 0;
                 str.push_back(dictionary[i]);
+//                memcpy(&str[index++], &dictionary[i], length + 1);
+              //  strcpy(str[index++], "jad");//dictionary[i];
             } else if (length == max) {
-                str.push_back(dictionary[i]);
+                memcpy(&str[index++], &dictionary[i], length + 1);
             }
         }
         return str;

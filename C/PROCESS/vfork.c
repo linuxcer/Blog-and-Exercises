@@ -8,15 +8,17 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sys/types.h>
+int num = 1;
 int main() {
-    int num = 1;
+   //int num = 1;
     int pid;
-    if ((pid = vfork()) == 0) {
+    if ((pid = fork()) == 0) {
         printf("Child, num = %d\n", ++num);
         sleep(4);
         printf("Child Over\n");
         _exit(1);
     } else {
+        sleep(5);
         printf("Parent, num = %d\n", num);
         sleep(1);
         printf("Parent Over\n");
