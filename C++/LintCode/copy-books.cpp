@@ -11,7 +11,7 @@
 
 using namespace std;
 
-clas Solution {
+class Solution {
     int copyBooks(vector<int> &pages, int k) {
         int n = pages.size();
         k = min(n, k);
@@ -23,7 +23,7 @@ clas Solution {
 
 
         for (int i = 1; i <= k; i++) {
-            for (int j = 0; j < n; ) {
+            for (int j = 0; j < n; j++) {
                 if (i == 1 || j == 0) {
                     minites[i][j] = sum_from_start[j];
                 } else {
@@ -35,7 +35,7 @@ clas Solution {
             }
         }
         return minites[k][n - 1];
-    }
+   }
 }
 
 
