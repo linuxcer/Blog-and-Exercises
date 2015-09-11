@@ -24,42 +24,43 @@ public:
      */
     string countAndSay(int n) {
         // Write your code here
-        string ss;
-        stringstream sss;
-        int sum = 1;
-        data Data[100];
-        int flag = 0;
+        string currstring = "1";
         for (int i = 1; i < n; i++) {
-            flag = 0;
-            // store data
-            while (sum != 0) {
-                if (flag > 0 && Data[flag - 1].value == sum % 10) {
-                    Data[flag - 1].count++;
-                    sum = sum / 10;
+            char tmp = currstring[0];
+            int count = 1;
+
+            string tmpstring;
+            // 处理边界条件
+            currstring += "$";
+
+
+            stringstream stream;
+            string str;
+
+            for (int j = 1; j < currstring.length(); j++) {
+                if (tmp == currstring[j]){
+                    count++;
                 } else {
-                    Data[flag].value = sum % 10;
-                    Data[flag].count++;
-                    sum = sum / 10;
-                    flag++;
+                    stream << count;
+                    stream >> str;
+                    tmpstring += str;
+                    tmpstring += tmp;
+
+                    tmp = currstring[j];
+                    count = 1;
                 }
             }
-
-            // restore data
-            while (flag) {
-                flag--;
-                sum = Data[flag].count;
-                sum = sum * 10 + Data[flag].value;
-            }
+            currstring = tmpstring;
         }
-        sss << sum;
-        sss >> ss;
-        return ss;
+        return currstring;
     }
 };
 
 
 int main() {
     Solution s;
+    cout << s.countAndSay(4) << endl;
     cout << s.countAndSay(5) << endl;
+    cout << s.countAndSay(6) << endl;
     return 0;
 }
