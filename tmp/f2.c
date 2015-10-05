@@ -8,6 +8,8 @@
 #include "f1.h"
 extern void fun(int);
 int main() {
-    fun(1000);
+//    fun(1000);
+
+    printf("%lu  %lu", sizeof(int), sizeof(float));
     return 0;
 }

@@ -9,9 +9,11 @@
 int main() {
     char str[10] = "zhang";
     int i;
+    goto end;
     printf("%p\n", str);
     printf("%p\n", (long)str & 0xfffffffffffff000);
     int start = 0;
+    /*
     for (i = 0; i < 4096; i++) {
         if (*(char *)(((unsigned long)str & 0xfffffffffffff000) + i) == 'z') {
             start = 1;
@@ -20,6 +22,9 @@ int main() {
         if (start == 1) {
             printf("%c", * (char *)(((unsigned long)str & 0xfffffffffffff000) + i));
         }
-    }
+    }*/
+end:
+    printf("end\n");
+
     return 0;
 }
