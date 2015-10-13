@@ -1,0 +1,30 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+IPADDR	server.c	22;"	d	file:
+LISTENQ	server.c	25;"	d	file:
+MAXLINE	server.c	24;"	d	file:
+MAX_LINE	select_server.c	21;"	d	file:
+PORT	server.c	23;"	d	file:
+SIZE	server.c	26;"	d	file:
+accept_client_proc	server.c	/^static int accept_client_proc(int srvfd)$/;"	f	file:
+allfds	server.c	/^    fd_set allfds;      \/*句柄集合*\/$/;"	m	struct:server_context_st	file:
+cli_cnt	server.c	/^    int cli_cnt;        \/*客户端个数*\/$/;"	m	struct:server_context_st	file:
+clifds	server.c	/^    int clifds[SIZE];   \/*客户端的个数*\/$/;"	m	struct:server_context_st	file:
+create_server_proc	server.c	/^static int create_server_proc(const char* ip,int port)$/;"	f	file:
+handle_client_msg	server.c	/^static int handle_client_msg(int fd, char *buf) $/;"	f	file:
+handle_client_proc	server.c	/^static void handle_client_proc(int srvfd)$/;"	f	file:
+main	select_server.c	/^int main(void) {$/;"	f
+main	server.c	/^int main(int argc,char *argv[])$/;"	f
+maxfd	server.c	/^    int maxfd;          \/*句柄最大值*\/$/;"	m	struct:server_context_st	file:
+my_fun	select_server.c	/^void my_fun(char *p) {$/;"	f
+portnumber	select_server.c	20;"	d	file:
+recv_client_msg	server.c	/^static void recv_client_msg(fd_set *readfds)$/;"	f	file:
+s_srv_ctx	server.c	/^static server_context_st *s_srv_ctx = NULL;$/;"	v	file:
+server_context_st	server.c	/^typedef struct server_context_st$/;"	s	file:
+server_context_st	server.c	/^} server_context_st;$/;"	t	typeref:struct:server_context_st	file:
+server_init	server.c	/^static int server_init()$/;"	f	file:
+server_uninit	server.c	/^static void server_uninit()$/;"	f	file:
