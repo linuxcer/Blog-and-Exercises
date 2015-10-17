@@ -17,16 +17,16 @@
 #include <arpa/inet.h>
 #include <ctype.h>
 
-#define portnumber 80
-#define MAX_LINE 8000
+#define portnumber 8000
+#define MAX_LINE 512 
 #define VERSION "0.1"
 #define HTTP_VERSION "1.1"
 
 
 static int send_header(int fd) {
     char header[128] = "HTTP/" HTTP_VERSION " 200 OK\r\n"
-                        "Server:jhttpd/" VERSION "\r\n";
-    printf("header:%s\n", header);
+                        "Server: jhttpd/" VERSION "\r\n";
+    //printf("header:%s\n", header);
     int nbyte;
     if ((nbyte = write(fd, header, strlen(header))) < 0) {
         return -1;
@@ -38,7 +38,7 @@ static int send_size(int fd) {
     char buf[64];
     int nbyte;
 
-    snprintf(buf, 64, "Content-length:%d\r\n", 66);
+    snprintf(buf, 64, "Content-length: %d\r\n", 66);
 
     if ((nbyte = write(fd, buf, strlen(buf))) < 0) {
         return -1;
@@ -68,8 +68,8 @@ static int send_header_fin(int fd) {
 
 static int send_info(int fd) {
     char buf[1024] = "<html><head><title>MY HOME</title><body>Hello World!</body></html>";
+//    printf("%d======\n", strlen(buf));
     int nbyte; 
-    printf("send_info len = %d\n", strlen(buf));
     if ((nbyte = write(fd, buf, strlen(buf)))< 0) {
         return -1;
     }
@@ -148,19 +148,19 @@ int main(void) {
     sin.sin_addr.s_addr = htonl(INADDR_ANY);
     sin.sin_port = htons(portnumber);
 
-    if ((lfd = socket(AF_INET, SOCK_STREAM, 0)) == -1) {
+    if ((lfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1) {
         printf("Socket error\n");
         exit(1);
     }
 
-    setsockopt(lfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
+    //setsockopt(lfd, SOL_SOCKET, SO_REUSEADDR, &opt, sizeof(opt));
 
     if (bind(lfd, (struct sockaddr *)(&sin), sizeof(struct sockaddr)) == -1) {
         printf("Bind error\n");
         exit(1);
     }
 
-    if (listen(lfd, 20) == -1) {
+    if (listen(lfd, 200) == -1) {
         printf("Listen error\n");
         exit(1);
     }
@@ -225,7 +225,8 @@ int main(void) {
             if (FD_ISSET(sfd, &rset)) {
                 n = read(sfd, buffer, MAX_LINE);
 
-                printf("%s\n", buffer);
+                
+                printf("n = %d;\n%s\n", n, buffer);
 
                 if (n == 0) {
                     printf("the other side has been closed \n");
@@ -234,10 +235,10 @@ int main(void) {
                     FD_CLR(sfd, &allset);
                     client[i] = -1;
                 } else {
-                    inet_ntop(AF_INET, &cin.sin_addr, addr_p, sizeof(addr_p));
-                    addr_p[strlen(addr_p)] = '\0';
-                    printf("Client Ip is %s, port is %d\n", addr_p, ntohs(cin.sin_port));
-                    my_fun(buffer);
+                    //inet_ntop(AF_INET, &cin.sin_addr, addr_p, sizeof(addr_p));
+                    //addr_p[strlen(addr_p)] = '\0';
+                    //printf("Client Ip is %s, port is %d\n", addr_p, ntohs(cin.sin_port));
+                    //my_fun(buffer);
                     
                     send_data(sfd);
                     
@@ -247,8 +248,8 @@ int main(void) {
 
                     //n = write(sfd, buffer, n+1);
 
-                    char tmp[1024];
-                    memset(tmp, 0, 1024);
+                    //char tmp[1024];
+                    //memset(tmp, 0, 1024);
 /*                    snprintf(tmp, 512, "HTTP/" HTTP_VERSION" 200 OK\r\n"
                                                            "Server: jhttpd/" VERSION "\r\n"
                                                            "Connection: close"
@@ -271,3 +272,4 @@ int main(void) {
     close(lfd);
     return 0;
 }
+
