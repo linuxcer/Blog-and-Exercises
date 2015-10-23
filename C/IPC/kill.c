@@ -12,14 +12,17 @@
 #include <sys/wait.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <sys/time.h>
 
 int main() {
     pid_t pid;
     int status;
+    struct timeval start, end;
     pid  = fork();
     assert(pid >= 0);
     if (pid  == 0) {
         printf("child process!\n");
+        gettimeofday(&start, NULL);
         kill(0, SIGKILL);
         sleep(5);
         printf("status3\n");
