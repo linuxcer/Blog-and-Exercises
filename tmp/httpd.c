@@ -7,7 +7,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-#define PORT 80
+#define PORT 8080
 #define VERSION "0.1"
 #define HTTP_VERSION "1.0"
 
