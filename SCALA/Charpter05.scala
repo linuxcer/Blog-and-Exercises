@@ -1,101 +1,88 @@
-import math.random
-import scala.collection.mutable.ArrayBuffer
-object test{
-    // 第1题
-    def randomArray(n: Int) =  {
-        for (i <- 0 until n) yield (random * n).toInt
+//import scala.reflect.BeanProperty
+object cla {
+  // 第1题
+  class Counter {
+    private var value = 0
+    def increment() = {
+      if (value < Int.MaxValue) value += 1 else value
     }
+    def current() = value
+  }
 
-    // 第2题
-    def changeOrder(n: Array[Int]) = {
-        val t = n.toBuffer
-        for (i <- 1 until (t.length, 2); tmp = t(i); j <- i - 1 until i) { // i是从第二个数开始跑，j是从第一个数开始
-            t(i) = t(j)
-            t(j) = tmp
-        }
-        t.toArray
-    }
+  // 第2题
+  class BankAccount(val balance: Double) {
+    def deposit() {}
+    def withdraw() {}
+  }
 
-    // 第3题
-    def changeOrder02(n: Array[Int]) = {
-        (for (i <- 0 until (n.length,2)) yield if (i + 1 < n.length) Array(n(i + 1),n(i))  else Array(n(i))).flatten.toArray
+  // 第3题(方法1)
+  class Time(val hours:Int, val minutes:Int) {
+    def before(other: Time): Boolean = { // 该方法可以访问一个对象的私有变量
+      if (hours > other.hours) 
+        false
+      else if ((hours == other.hours) && minutes > other.minutes)
+        false
+      else 
+        true
     }
+  }
 
-    // 第4题(方法1)
-    def reOrder(arr: Array[Int]) = {
-        val activ = ArrayBuffer[Int]()
-        val negativ = ArrayBuffer[Int]()
-        for (i <- 0 until arr.length) {
-            if (arr(i) >0) {
-                activ += arr(i)
-            } else {
-                negativ += arr(i)
-            }
-        }
-        activ ++= negativ
-        activ.toArray
+  // 第3题（方法2）
+  class Time2(val hours:Int, val minutes:Int) {
+    def before(other: Time2): Boolean = {
+      hours < other.hours || (hours == other.hours && minutes < other.minutes)
     }
+    override def toString(): String = {
+      hours + ":" + minutes
+    }
+  }
 
-    // 第4题(方法2)
-    def reOrder2(arr: Array[Int]) = {
-        val activ = ArrayBuffer[Int]()
-        val negativ = ArrayBuffer[Int]()
-        arr.foreach(arg => if (arg > 0) activ += arg else negativ += arg)
-        activ ++= negativ
-        activ.toArray
+  // 第4题
+  class Time3(val hours:Int, val minutes:Int) {
+    def before(other: Time3): Boolean = {
+      hours < other.hours || (hours == other.hours && minutes < other.minutes) 
     }
-        
-    // 第5题(方法1)
-    def calSum(arr: Array[Int]) = {
-        var sum: Double = 0
-        arr.foreach(arg => sum += arg)
-        sum = sum / arr.length
-        sum
+    override def toString(): String = {
+      (hours * 60 + minutes).toString
     }
+  }
 
+  // 第5题
+ /* class Student {
+    @BeanProperty var name: String = _
+    @BeanProperty var id: Long = _
+  }*/
 
-    // 第5题(方法2)
-    def calSum2(arr: Array[Double]) = {
-        arr.sum / arr.length 
-    }
+  // 第6题
+  class Person(var age: Int) { // 主构造器会执行类中所有的语句
+    age = if (age < 0) 0 else age
+  }
 
-    // 第6题(方法1)
-    def reverseOrder(arr: Array[Int]) = {
-        for (i <- (0 until arr.length).reverse) yield arr(i)
-    }
+  // 第7题
+  /*class Person2(val name: String) {
+    val firstName: String = name
+  }*/
 
-    // 第6题(方法2)
-    def reverseOrder2(arr: Array[Int]) = {
-        arr.reverse 
-    }
+  // 第8题
+  class Car()
+  def main(args:Array[String]) {
+    println("test1:")
+    val c = new Counter
+    c.increment()
+    println(c.current)
+    println("test3:")
+    val t1 = new Time(12, 20)
+    val t2 = new Time(13, 30)
+    println(t1.before(t2))
 
-    // 第7题
-    def distinctArr(arr: Array[Int]) = {
-        arr.distinct
-    }
-
-    // 第8题
-    def removeArr(arr: Array[Int]) = {
-        val t = arr.toBuffer
-        val index = for (i <- 0 until arr.length if arr(i) < 0) yield i
-        val right = index.reverse.dropRight(1)
-        right.foreach(t.remove(_))
-        t 
-    }
-
-    def main(args: Array[String]) {
-        println(randomArray(10).mkString(","))    
-        println(changeOrder(Array(1,2,3,4,5)).mkString(","))
-        println(changeOrder02(Array(1,2,3,4,5)).mkString(","))
-        println(reOrder(Array(3,0,-3,2,-9,5)).mkString(","))
-        println(reOrder2(Array(3,0,-3,2,-9,5)).mkString(","))
-        println(calSum(Array(-3,7,0,3,3)).toString)
-        println(calSum2(Array(-3,7,0,3,3)).toString)
-        println(reverseOrder(Array(-3,7,0,3,3)).mkString(","))
-        println(reverseOrder2(Array(-3,7,0,3,3)).mkString(","))
-        println(distinctArr(Array(3,3,3,2,1,-9,8,8)).mkString(","))
-        println(removeArr(Array(2,3,-1,-5,-8,0,-3,48)).mkString(","))
-    }
+    val t3 = new Time2(12, 20)
+    val t4 = new Time2(13, 30)
+    println(t3.before(t4))
+    
+    println("test4:")
+    val t5 = new Time3(12, 20)
+    val t6 = new Time3(13, 30)
+    println(t5.toString)
+    
+  }
 }
-
-  
