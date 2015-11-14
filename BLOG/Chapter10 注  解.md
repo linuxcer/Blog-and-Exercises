@@ -7,7 +7,7 @@
 
 + **注解：**是那些你插入到代码中以方便工具可以对它们进行处理的**标签**。
 
-+ **注解作用：**是描述哪些被注解的表达式、变量、字段、方法或类型。
++ **注解作用：**是描述那些被注解的表达式、变量、字段、方法或类型。
 
 + Java中注解不会影响编译器生成字节码，而Scala中会影响。
 
@@ -133,6 +133,27 @@
 
 ----------
 ## 9. 基本类型的特殊化
++ 给类型参数添加`@specialized`注解，**编译器会自动生成对应类型的所有方法**。不需要自己写重载函数。
 
++ 可用的类型有：**Unit、Boolean、Byte、Short、Char、Int、Long、Float、Double**。
+
+		def allDifferent[@specialized(Double, Long) T](x: T, y: T, z: T) = x != y && x != z && y != z
+
+
+----------
+## 10. 用于错误和警告的注解
++ `@deprecated`注解被添加后，编译器遇到被注解的方法使用时就会生成一个警告，它有两个参数可选，messsage和since。
+
+		@deprecated(message = "Use factorial(n: BigInt) instead")
+		def factorial(n: Int): Int = if (n <= 0) 1 else n * factorial(n - 1)
++ `@implicitNotFound`注解用于某个隐式参数不存在时会生成有意义的错误提示。
+
++ `@unchecked`注解用于在匹配不完整时取消警告信息。
+
+
+----------
+【待续】
+
+ 
 
 	
