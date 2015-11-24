@@ -162,19 +162,81 @@
 
 ----------
 ## 9. 型变
+> **个人理解：**如果只是看书本，这小结还是挺不容易看明白的。其实，仔细分析下，协变和逆变还是很好理解的。***如果将父类作为函数参数，想子类作为参数也可以调用，这就是协变；如果将子类作为函数参数，想父类作为参数也可以调用，这就是逆变。***这段话如果没看明白，先看下面具体例子，看完后再回来看这段话。
 
++ 假设有函数定义`def makeFriends(p: Pair[Person])`，并且Student是Person的子类，如果使用Pair[Student]作为参数去调用makeFriends函数，程序会报错。要想实现这种方式的调用，需要把Pair定义修改如下：
+
+```
+	class Pair[+T](val first: T, val second: T)
+```
+
++ `+T`**（协变）**表示某个泛型类的**子类型关系**和参数T方向一致。
+
++ 下面讲解第二种型变方式**逆变**。
+```
+	trait Friend[-T] { // -T表示逆变
+	  def befriend(someone: T)
+	}
+	
+	class Person(name: String) extends Friend[Person] {
+	  def befriend(someone: Person) {
+	      this + " and " + someone + " are now friends."
+	  }
+	}
+	
+	// Student是Person子类
+	class Student(name: String) extends Person(name)
+	
+	// 需要注意该函数定义的传入参数是子类类型
+	def makeFriendWith(s: Student, f: Friend[Student]) { f.befriend(s) }
+	
+	val susan = new Student("Susan")
+	val fred = new Person("Fred")
+	// 可以调用
+	makeFriendWith(susan, fred) 
+```
+
++ `-T`**（逆变）**表示某个泛型类的**父类型关系**和参数T方向一致，刚好与协变相反。
 
 ----------
 ## 10. 协变和逆变点
++ 函数在参数上是逆变的，返回值上是协变的。**逆变**适应于表示**输入类型参数**，**协变**适应于表示**输出类型参数**。
+
++ Scala中数组类型是不支持型变的，因为它作为输入和输出类型要保持不变。
+
++ **参数的位置是逆变点，返回值类型的位置是协变点**，在函数的参数中，型变是反过来的，它的参数是协变的。
+```
+	foldLeft[B](z: B)(op: (B, A) => B): B
+	               -       +  +     -   +
+```
 
 
 ----------
 ## 11. 对象不能泛型
++ 不能将参数化类型添加到对象。
+```
+	abstract class List[+T] {
+	  def isEmpty: Boolean
+	  def head: T
+	  def tail: List[T]
+	}
 
+	// 对象不能写成 object Empty[T] extends List[T] 
+	// 类可以使用 class Empty[T] extends List[T] 	
+	// 这里可以使用Nothing，前面说过Nothing是所有类型的子类型。
+	object Empty extends List[Nothing] {
+	  def isEmpty = true
+	  def head = throw new UnsupportedOperationException
+	  def tail = throw new UnsupportedOperationException
+	}
+```
 
 ----------
 ## 12. 类型通配符
-
++ Scala中类型可以使用通配符。
+```
+	def process(people: java.util.List[_ <: Person]
+```
 
 ----------
 【待续】

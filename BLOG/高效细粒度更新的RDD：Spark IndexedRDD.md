@@ -59,7 +59,7 @@ IndexedRDD主要提供了三个接口：
 ```
 
 
-此外IndexedRDD还提供了基于RDD**构建IndexedRDD的函数：**
+此外IndexedRDD还提供了基于RDD **构建IndexedRDD的函数：**
 
 ```
 	object IndexedRDD {
@@ -118,7 +118,7 @@ IndexedRDD主要提供了三个接口：
 
 ## 5. Persistent Adaptive Radix Trees（PART）
 
-IndexedRDD的每个Partition的存储用的是**Persisten Adaptive Radix Trees**，翻译出来应该是“持久化自适应基数树”。在Linux中也是有“基数树”，主要作用是做内存管理。IndexedRDD的PART**主要特点**有：
+IndexedRDD的每个Partition的存储用的是**Persisten Adaptive Radix Trees**，翻译出来应该是“持久化自适应基数树”。在Linux中也是有“基数树”，主要作用是做内存管理。IndexedRDD的PART **主要特点**有：
 
 + 基于索引的内存存储结构    
 

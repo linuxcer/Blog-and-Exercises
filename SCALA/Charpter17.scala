@@ -37,3 +37,6 @@ object test17_3 extends App {
   val p2 = p1.swap("hello", "world")
   println("first:" + p2.first + " second:" + p2.second)
 }
+
+// 习题4 
+
