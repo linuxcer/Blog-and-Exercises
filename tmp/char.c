@@ -9,5 +9,6 @@
 int main() {
     int i = 0;
     char *str = i == 0 ? "1" : "0";
+    printf("%d\n", sizeof(int));
     return 0;
 }

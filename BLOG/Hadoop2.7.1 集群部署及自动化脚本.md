@@ -200,16 +200,6 @@ export JAVA_HOME=/root/spark_sdk/jdk1.7.0_71
         <name>mapreduce.framework.name</name>
         <value>yarn</value>
     </property>
-    
-    <property>
-        <name>mapreduce.jobhistory.address</name>
-        <value>namenode:10020</value>
-    </property>
-
-    <property>
-        <name>mapreduce.jobhistory.webapp.address</name>
-        <value>namenode:19888</value>
-    </property>
 </configuration>
 ```
 
@@ -217,47 +207,46 @@ export JAVA_HOME=/root/spark_sdk/jdk1.7.0_71
 
 ```
 <configuration>
+         
 <!-- Site specific YARN configuration properties -->
     <property>
         <name>yarn.nodemanager.aux-services</name>
         <value>mapreduce_shuffle</value>
     </property>
-    
     <property>
         <name>yarn.nodemanager.auxservices.mapreduce.shuffle.class</name>
         <value>org.apache.hadoop.mapred.ShuffleHandler</value>
     </property>
-
     <property>
         <name>yarn.resourcemanager.address</name>
         <value>namenode:8032</value>
     </property>
-    
     <property>
         <name>yarn.resourcemanager.scheduler.address</name>
         <value>namenode:8030</value>
     </property>
-    
     <property>
         <name>yarn.resourcemanager.resource-tracker.address</name>
         <value>namenode:8031</value>
     </property>
-    
     <property>
         <name>yarn.resourcemanager.admin.address</name>
         <value>namenode:8033</value>
     </property>
-    
     <property>
         <name>yarn.resourcemanager.webapp.address</name>
-        <value>namenode:8088</value>
-    </property>
-    
-    <property>
-        <name>yarn.nodemanager.resource.memory-mb</name>
-        <value>768</value>
+        <value>namenode:8088</value>                                                                                                    
     </property>
 </configuration>
+
+```
+
+
+**slaves 文件 **
+```
+	datanode1
+	datanode2
+	datanode3
 ```
 
 ### 6. 启动Hadoop
@@ -274,17 +263,33 @@ sbin/start-yarn.sh
 
 ### 7. 集群启动验证
 
-执行`jps`命令，可以查询到有如下进程说明集群部署成功！
+namenode上执行`jps`命令，可以查询到有如下进程：
+
 ```
-NodeManager
-ResourceManager
-SecondaryNameNode
-NameNode
-DataNode
+15746 SecondaryNameNode
+15508 NameNode
+15969 ResourceManager
+16377 Jps
 ```
+datanode上执行`jps`命令，可以查询到有如下进程：
+```
+14731 Jps
+14421 NodeManager
+14182 DataNode
+```
+
 ### 8. 查询集群信息 && 关闭集群
 
-可以在浏览器中输入：`10.107.12.10:50070`查询集群信息，这里10.107.12.10是namenode的IP地址，关闭集群可以执行`sbin/stop-all.sh`。
+可以在浏览器中输入：`10.107.12.10:50070`查询HDFS相关信息，这里10.107.12.10是namenode的IP地址。浏览器输入：`10.107.12.10:8088`查看yarn的启动情况。
+
+关闭集群可以执行`sbin/stop-all.sh`。
+
+### 9. 运行应用程序
+启动集群后，切换到hadoop 主目录，执行 `./bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.1.jar pi 20 10`，运行成功后会输出Pi的值，结果如下：	
+	
+![Hadoop2.7.1集群部署](http://img.blog.csdn.net/20151128080309873)
+
+【完】
 
 [1]: http://blog.csdn.net/zcf1002797280/article/details/49450075
 [2]: http://mirrors.hust.edu.cn/apache/hadoop/common/stable2/hadoop-2.7.1.tar.gz
