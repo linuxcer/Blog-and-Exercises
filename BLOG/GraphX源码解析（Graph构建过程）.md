@@ -1,7 +1,11 @@
-## 1. Graph构建
+## 0. Graph构建
 `Graph`对象是用户的操作入口，主要包含edge和vertex两部分。边是由点组成，所以边中所有的点就是点的全集，但这个全集包含了重复的点，去重后就是VertexRDD。
 
-### 1.1 构建图的方法
+
+----------
+
+
+## 1. 构建图的方法
 1. 从边的集合构建图（`Graph.fromEdges`）
 	```
 	def fromEdges[VD: ClassTag, ED: ClassTag](
@@ -48,8 +52,12 @@
   }
 ```
 
-### 1.2 构建EdgeRDD
-#### 1.2.1 从HDFS加载文本文件
+
+----------
+
+
+## 2. 构建EdgeRDD
+### 2.1 从HDFS加载文本文件
 从分布式文件系统（HDFS）中加载文本，按行处理成元组形式，即`(srcId, dstId)`。
 ```
     val rawEdgesRdd: RDD[(Long, Long)] = sc.textFile(input, partNum).repartition(partNum).map {
@@ -70,7 +78,7 @@
 ...
 ```
 
-#### 1.2.2 详细构建过程
+### 2.2 详细构建过程
 1. 第一步：`Graph.fromEdge(edges)`
 	
 	首先从已经构建好的`RDD[Edge[ED]]`来开始整个`EdgeRDD`的构建。`Edge`在文件`Edge.scala`中定义，主要存储了边的三种类型数据：`srcId`, `dstId`, `attr`。
@@ -191,7 +199,11 @@
 	2. 根据VertexId取本地下标，取属性
 		VertexId -> global2local -> index -> data -> attr object
 
-### 1.3 构建VertexRDD
+
+----------
+
+
+## 3. 构建VertexRDD
 
 1. 第一步：`VertexRDD.fromEdges()`
 
@@ -225,7 +237,7 @@
  （4）`new VertexRDDImpl()`
 	 创建完对象后会生成VertexRDD。
 
-### 1.4 生成Graph对象
+## 4. 生成Graph对象
 
 把上述edgeRDD和vertexRDD拿过来组成Graph
 
@@ -233,3 +245,7 @@
 new GraphImpl(vertices, new ReplicatedVertexView(edges.asInstanceOf[EdgeRDDImpl[ED, VD]]))
 ```
 ![Graph](http://img.blog.csdn.net/20160406155505641)
+
+
+----------
+【完】
