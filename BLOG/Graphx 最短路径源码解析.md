@@ -8,12 +8,12 @@
 		(1, Map(1 -> 0, 4 -> 2)), (2, Map(1 -> 1, 4 -> 2)), (3, Map(1 -> 2, 4 -> 1)),
 		(4, Map(1 -> 2, 4 -> 0)), (5, Map(1 -> 1, 4 -> 1)), (6, Map(1 -> 3, 4 -> 1)))
 
-		// 构造无向图的边序列
+		// 构造有向图的边序列
 		val edgeSeq = Seq((1, 2), (1, 5), (2, 3), (2, 5), (3, 4), (4, 5), (4, 6)).flatMap {
 			case e => Seq(e, e.swap)
 		}
 
-		// 构造无向图
+		// 构造有向图
 		val edges = sc.parallelize(edgeSeq).map { case (v1, v2) => (v1.toLong, v2.toLong) }
 		val graph = Graph.fromEdgeTuples(edges, 1)
 
@@ -83,13 +83,13 @@
 			addMaps(attr, msg)
 		}
 		
-		// 还需要明确一点，该算法只能对无向图找最短路径，所以任意两点之间只要有路径都是两条路径
+
 		// 该函数应用于邻居顶点在当前迭代中接收message
 		// 一旦收到通知，相对于发送该消息的点，就是目的节点，相对于收到消息的点就是源节点
 		// 这个地方从源节点考虑
 		def sendMessage(edge: EdgeTriplet[SPMap, _]): Iterator[(VertexId, SPMap)] = {
 		// 对所有目的节点值加1
-		// 无向图中，目的节点包含刚才发送数据给我的点（要自己理解这句话）
+		
 		val newAttr = incrementMap(edge.dstAttr)
 		// 求得最短路径，将源节点的值发送给所有所有的源节点，其实这里源节点就是相邻点的意思，换成目的节点应该也是可以的
 		if (edge.srcAttr != addMaps(newAttr, edge.srcAttr)) Iterator((edge.srcId, newAttr))
@@ -106,9 +106,9 @@
 ```
 GraphX最短路径求解中使用了Pregel模型，这是一个非常高效的图计算模型。但目前最短路径有如下限制：
 
-1. 只能用于无向图；
-2. 只能用于非带权图（权值相等）；
-3. 利用的算法是迪杰斯特拉求解最短路径。
+
+1. 只能用于非带权图（权值相等）；
+2. 利用的算法是迪杰斯特拉求解最短路径。
 
 
 ----------
