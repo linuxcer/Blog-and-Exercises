@@ -3,3 +3,15 @@
 *.so
 *.out
 *.class
+Go/httpsfile
+Go/bin/gocode
+Go/sorter/bin/gotags
+Go/sorter/bin/sorter
+Go/sorter/bin/goreman
+Go/sorter/src/sorter/sorter
+Go/https
+Go/RPC/server
+Go/RPC/client 
+Go/bin/ 
+Go/src/ 
+Go/IPC/cgss/
